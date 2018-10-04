@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\Lamp]
+"SubCommands"="lampon;lampoff"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\lampon]
+@="Turn On"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\lampon\command]
+@="%CD%\\lampdrm.exe on"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\lampoff]
+@="Turn Off"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\lampoff\command]
+@="%CD%\\lampdrm.exe off"
