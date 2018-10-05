@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace lampdrm
@@ -24,25 +25,31 @@ namespace lampdrm
                     return;
                 }
 
-                RegistryKey regKey = Registry.LocalMachine.OpenSubKey("\\SOFTWARE");
+                RegistryView currentRegistryView = Environment.Is64BitOperatingSystem
+                                                    ? RegistryView.Registry64
+                                                    : RegistryView.Registry32;
+                RegistryKey regKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, currentRegistryView).OpenSubKey("SOFTWARE");
                 string com = (string)regKey.GetValue("lampdrm");
                 if(string.IsNullOrEmpty(com))
                 {
                     MessageBox(IntPtr.Zero, "Please set Comport in register.reg and run again", "Error", 0);
                     return;
                 }
-                SerialPort serialPort = new SerialPort(com, 9600);
-                serialPort.Open();
-
-                switch(args[0])
+                byte Command = 0;
+                switch (args[0])
                 {
                     case "on":
-                        serialPort.Write(new byte[] { 0xF0 }, 0, 1);
+                        Command = 0xF0;
                         break;
                     case "off":
-                        serialPort.Write(new byte[] { 0xAA }, 0, 1);
+                        Command = 0xAA;
                         break;
                 }
+
+                SerialPort serialPort = new SerialPort(com, 9600);
+
+                serialPort.Open();
+                serialPort.Write(new byte[] { Command }, 0, 1);
                 serialPort.Close();
             }
             catch(Exception ex)
