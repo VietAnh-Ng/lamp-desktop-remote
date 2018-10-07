@@ -57,5 +57,10 @@ namespace lampdrm
                 MessageBox(IntPtr.Zero, ex.ToString(), "Error", 0);
             }
         }
+
+        private static void SerialPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        {
+            MessageBox(IntPtr.Zero, e.EventType.ToString(), "Error serial port", 0);
+        }
     }
 }

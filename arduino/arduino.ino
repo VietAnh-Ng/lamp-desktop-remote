@@ -1,5 +1,5 @@
 int relay_pin = 4;
-int led_pin = 13;
+int led_pin = 12;
 int incomingByte = 0;
 void setup() 
 {
@@ -19,6 +19,7 @@ void loop()
     {
       digitalWrite(relay_pin, 1);
       digitalWrite(led_pin, 1);
+      
     }
     else if(incomingByte == 0xAA)
     {
